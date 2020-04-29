@@ -4,7 +4,7 @@
  * @Autor: Lianzhidong
  * @Date: 2020-04-11 20:24:48
  * @LastEditors: Lianzhidong
- * @LastEditTime: 2020-04-28 20:25:16
+ * @LastEditTime: 2020-04-29 21:15:18
  */
 const querystring = require('querystring')
 const handleBlogRouter = require('./src/router/blog.js')
@@ -43,6 +43,7 @@ const serverHandle = (req,res)=>{
     const url = req.url
     //解析参数
     req.query = querystring.parse(url.split('?')[1])
+    console.log(JSON.stringify(req.query))
     //处理postData
     getPostData(req).then( postData =>{
         req.body = postData

@@ -4,7 +4,7 @@
  * @Autor: Lianzhidong
  * @Date: 2020-04-12 18:05:19
  * @LastEditors: Lianzhidong
- * @LastEditTime: 2020-04-28 20:25:36
+ * @LastEditTime: 2020-04-29 21:11:21
  */
 const { exec } = require('../db/mysql.js')
 
@@ -39,11 +39,24 @@ const newBlog = (blogData) => {
 
 const updateBlog = (id,blogData={}) => {
     //blogData是一个对象，包含content,title等属性
-    return true
+    const {title ,content} = blogData
+    const sql = `update blogs set title = '${title}',content = '${content}' where id = '${id}'`
+    return exec(sql).then(updateData => {
+        if(updateBlog.affectedRows > 0){
+            return true
+        }
+        return false
+    })
 }
 
-const deleteBlog = (id) => {
-    return true
+const deleteBlog = (id,author) => {
+    const sql = `delete from blogs where id='${id}' and author='${author}'`
+    return exec(sql).then(deleteData => {
+        if(deleteData.affectedRows > 0){
+            return true
+        }
+        return false
+    })
 }
 module.exports = {
     getList,

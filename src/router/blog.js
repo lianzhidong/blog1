@@ -4,7 +4,7 @@
  * @Autor: Lianzhidong
  * @Date: 2020-04-11 20:27:57
  * @LastEditors: Lianzhidong
- * @LastEditTime: 2020-04-28 20:24:54
+ * @LastEditTime: 2020-04-29 21:19:52
  */
 const { getList,
         getDetail,
@@ -50,21 +50,26 @@ const handleBlogRouter = (req,res)=>{
     if(method === 'POST' && path==='/api/blog/update'){
         const id = req.query.id
         const result = updateBlog(id,req.body)
-        if(result){
-            return new SuccessModel()
-        }else{
-            return new ErrorModel('更新博客失败')
-        }
+        result.then( val => {
+            if(val){
+               return new SuccessModel() 
+            }else{
+                return new ErrorModel('更新博客失败')
+            }
+        })
     }
     //删除博客
     if(method === 'POST' && path==='/api/blog/delete'){
         const id = req.query.id
-        const result = deleteBlog(id)
-        if(result){
-            return new SuccessModel()
-        }else{
-            return new ErrorModel('删除博客失败')
-        }
+        const author = req.query.author
+        const result = deleteBlog(id,author)
+        result.then( val => {
+            if(val){
+                return new SuccessModel() 
+            }else{
+                return new ErrorModel('删除博客失败')
+            }
+        })
     }
 }
 module.exports = handleBlogRouter
